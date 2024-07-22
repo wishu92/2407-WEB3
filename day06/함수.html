@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 함수는 매개변수와 리턴을 선택적으로 사용할 수 있다.
+        // 매개변수가 있는 예시
+        // 입력한 값에 3을 더해 콘솔에 출력하는 함수
+
+        // 함수 선언시 괄호 안에 들어가는 것이 '매개변수'
+        // 함수를 사용할 때 어떤 값을 외부로부터 받아 올것인지 미리 정해놓는 곳
+        // 설명서와 비슷한 느낌으로 생각하셔도 무방합니다.
+        function add3AndExportConsole(number){
+            console.log(number+3)
+        }
+
+        add3AndExportConsole(10)
+
+
+    
+        function 출생년도계산기(현재년도, 나이){
+            return 현재년도 - 나이 + 1;
+        }
+    
+        const 강사출생년도 = 출생년도계산기(2024,32);
+        const 김소원출생년도 = 출생년도계산기(2024,33);
+
+        console.log(강사출생년도);
+        console.log(김소원출생년도);
+
+
+
+        // 현재년도는 컴퓨터의 시간으로 무한으로 자동 업데이트 만들 수 있음.
+        function 출생년도계산(나이){
+            const date = new Date();
+            const 현재년도 = date.getFullYear();
+            
+            return 현재년도 - (나이-1);
+        }
+
+        const 소원출생 = 출생년도계산(33);
+
+        console.log(소원출생);
+
+
+        // 옵셔널 패러미터 (항상 가장 마지막에 써야함)
+        function 인사(이름,국적='대한민국'){
+            
+        }
+    </script>
+</body>
+</html>

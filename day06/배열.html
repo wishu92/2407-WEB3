@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const student1 = '이예림';
+        const student2 = '박요한';
+        const student3 = '윤혜지';
+
+        // 위처럼 하나하나 작성하기 힘들다. 따라서 아래 방식으로 '배열'을 이용할 수 있다.
+
+        const studentNames = ['이예림','강하윤','박요한','김유리','김정연','진민승']
+        // 대괄호에 묶여있고, 쉼표로 개체가 구분되는 형태를 배열이라고 한다.
+
+        //콘솔에 '박요한'을 출력하고싶다
+        console.log(studentNames[2])
+
+        // 배열의 인덱스를 활용해 특정 요소를 사용할 수 있다.
+        // 인덱스는 0부터 시작하고, 배열선언할 때 대괄호 [ ] 사용했던 것과 같이 변수명[인덱스] 형태로 사용하면 된다.
+
+        // 배열에 새로운 요소를 넣고 싶다면 push() 매서드를 이용하면 된다. 
+        studentNames.push('이유미');
+
+        console.log(studentNames)
+
+        // 배열에 마지막 요소를 사용(제거)하고 싶을 때 (stack;차곡차곡 반듯하게 쌓여있는거)
+        // 꺼내서 사용하면 남은 studentname에 안남게됨.
+        console.log(studentNames.pop())
+
+
+        // 배열에 요소를 맨 앞에 넣고 싶을 때
+        studentNames.unshift('김소원')
+        console.log(studentNames)
+        
+        // 맨 앞의 요소를 사용(queue)
+        console.log(studentNames.shift())
+
+    </script>
+</body>
+</html>
