@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const 난수 = Math.random()
+        console.log(난수);
+        // 0 이상 1 미만
+        // 0 ~ 0.999999999999999... 까지 나옴
+
+        // 0 ~ 4까지 만들고 싶은 상황이라면
+        // *5 하면,  최소값 = 0 , 최대값 = 4.9999...
+        // 하고 소숫점을 버리기(parseInt)
+
+        // 아래와 같이하면됨. 
+        // const 난수1 = parseInt(Math.random()*5)
+
+        console.log(parseInt(Math.random()*5));
+
+        // for(let i = 0 ; i < 10 ; i++){
+        //     console.log(parseInt(Math.random()*5));
+        // }
+
+
+        // 20부터 80까지 난수구하기
+        // 범위가 60이지만 숫자20도 포함이므로 *61 
+        // 20부터 이므로 (최솟값 0) + 20 해주기
+
+        // 공식(정수) parseInt(Math.random() * 범위) + 시작값
+
+        console.log(parseInt(Math.random()*61)+20);
+
+        // 결과값의 오류가 있는지 확인하는 방법
+        // 50000번 이나 돌리는 동안 최대값이 80이고 최소값이 20이라면 잘 된거라고 보는것.
+        // max가 높은 숫자가 나오면 갱신되는 원리, 
+        
+        let max = 0;
+        let min = 10000;
+
+        for(let i = 0 ; i < 1000 ; i ++) {
+            const randomNumber = parseInt(Math.random()*61)+20;
+            if(randomNumber > max) { 
+                max = randomNumber;
+            } 
+
+            if(randomNumber < min){
+                min = randomNumber;
+            }
+        }
+
+        console.log(max,min);
+    </script>
+
+</body>
+</html>
