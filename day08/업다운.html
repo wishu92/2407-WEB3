@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // continue; : 반복문 안에서 컨티뉴를 만나면 아래있는거 싹 무시하고 다음 회차 실행
+        // break; : 조건에 만족되면 반복문이 중단됨.
+
+        let 범위;
+        let 기회;
+
+        
+        alert(`UP and DOWN 게임!`);
+        let level;
+        
+        // 결과 값이 true일 동안에(while) 계속 시행함.
+        while(true){
+            level = parseInt(prompt(`난이도를 설정해주세요`,`1 : 이지, 2 : 노말, 3 : 하드`))
+            if(typeof level === 'number' && level >= 1 && level <= 4 ){
+                break;
+            }
+            alert(`잘못된 값을 입력하셨습니다`)
+        }
+
+
+
+
+        
+
+
+
+
+        const 정답 = parseInt(Math.random()*범위)+1;
+        
+        
+        for(let i = 0 ; i < 기회 ; i++){
+    
+            const 답변 = parseInt(prompt('내가 생각한 숫자는?'));
+            // ptompt(50)은 '50'(문자임) 따라서 parseInt(50)을 해줘야 정수 50이 됨.
+
+
+            if(답변 === 정답){
+                alert('정답입니다')
+                // i = 5; 끝내고 싶을 때 i가 0~5까지 해야끝나므로 5로 바꾸면 끝나버림
+                break;
+            }else if(답변 > 정답){
+                alert('down')
+
+            }else{
+                alert('up')
+            }
+            
+        }
+
+        alert(`정답은 ${정답}입니다`)
+    </script>
+</body>
+</html>

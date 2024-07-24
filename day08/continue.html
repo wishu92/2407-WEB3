@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        // continue; : 반복문 안에서 컨티뉴를 만나면 아래있는거 싹 무시하고 다음 회차 실행
+        // break; : 조건에 만족하면 반복문 멈춤
+
+
+        for(let i = 1 ; i <= 10 ; i ++){
+            if(i % 3 !== 0){
+                console.log(i)
+            }
+        }
+
+        for(let i = 1 ; i <= 10 ; i ++){
+            if(i % 3 === 0 ){
+                continue;
+            }
+            console.log(i)
+        }
+
+        for(let i = 1 ; i <= 10 ; i ++){
+            if(i % 3 === 0 ){
+                break;
+            }
+            console.log(i)
+        }
+    </script>
+</body>
+</html>

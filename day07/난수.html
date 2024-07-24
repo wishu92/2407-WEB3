@@ -14,7 +14,7 @@
 
         // 0 ~ 4까지 만들고 싶은 상황이라면
         // *5 하면,  최소값 = 0 , 최대값 = 4.9999...
-        // 하고 소숫점을 버리기(parseInt)
+        // 하고 소숫점을 버리기, 숫자로 인식(parseInt)
 
         // 아래와 같이하면됨. 
         // const 난수1 = parseInt(Math.random()*5)
@@ -41,7 +41,7 @@
         let max = 0;
         let min = 10000;
 
-        for(let i = 0 ; i < 1000 ; i ++) {
+        for(let i = 0 ; i < 50000 ; i ++) {
             const randomNumber = parseInt(Math.random()*61)+20;
             if(randomNumber > max) { 
                 max = randomNumber;
