@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box-class" id="box-id">
+        안녕하세요
+        <p class="my-p-tag">1</p>
+        <p class="my-p-tag">2</p>
+        <p class="my-p-tag">3</p>
+    </div>
+
+    <div class="box-class2" id="box-id2">
+        안녕하세요
+        <p class="my-p-tag">1</p>
+        <p class="my-p-tag">2</p>
+        <p class="my-p-tag">3</p>
+    </div>
+    
+    <script>
+        // html 요소를 가져오는 방법
+        // 1.태크 , 2.클래스 , 3.아이디
+        // documents.getElementBy.... 형태로 작성한다.
+
+        // 보통 이름은 잘 변경하지 않기 때문에 const로 많이 지정한다.
+        // 다음번에 사용해야하기 때문에 const의 박스안에 idbox,classbox라는 이름 붙여서 넣어놔야 사용할 수 있음
+        const idBox = document.getElementById('box-id');
+        const classBox = document.getElementsByClassName('box-class');
+
+        console.log(idBox);
+        console.log(classBox);
+        //<div~~/div> 이름 지정되어있는 것 통째로 가져옴
+        
+        idBox.classList.add('new');
+        classBox[0].classList.add('old');
+        // div의 class명에 new, old를 붙이는 것.
+
+        // id는 정확히 개체를 특정하기 때문에 그냥 이용가능하지만
+        // class, tag로 가져왔을 때는 collection(보따리)형태로 가져오기 때문에
+        // 내부 요소를 사용하려면 반드시 인덱스를 작성해야한다. 
+        // (보따리 내에 정확히 어디에 위치해야하는지를 순서[]로 작성해야함.)
+
+
+
+        // css선택자를 이용해 요소를 가져올 수 있다
+
+        const 쿼리셀렉터 = document.querySelector(`.box-class > .my-p-tag`)
+        console.log(쿼리셀렉터)
+        // 가장 먼저 만나는 하나의 요소만을 가져온다 (위의 p 1-2-3중에 1번을 말한다)
+        // 한번 지정하면 계속 유지하려는 성질
+        
+
+        const 쿼리셀렉터올 = document.querySelectorAll(`.box-class > .my-p-tag`)
+        console.log(쿼리셀렉터올)
+        // 보따리 형태로 가져옴
+
+        const myPTag = document.getElementsByClassName(`my-p-tag`)
+        console.log(myPTag);
+        // html문서에서 my-p-tag class명을 가진 것 전부 부르기.
+
+        const 아이디박스안의피태그 = idBox.getElementsByClassName(`my-p-tag`)
+        console.log(아이디박스안의피태그);
+        // idBox내에 my-p-tag class명을 가진 것만 부름 (.box.id > .my-p-tag`) 이런 느낌
+
+
+
+    </script>
+</body>
+</html>
