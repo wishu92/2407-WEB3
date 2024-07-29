@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .rect {
+            width: 300px;
+            height: 100px;
+            border: 1px solid #222;
+            border-radius: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="color-box">
+        <div class="rect"></div>
+        <input type="range">
+    </div>  
+
+    <div class="color-box">
+        <div class="rect"></div>
+        <input type="range">
+    </div>  
+
+    <div class="color-box">
+        <div class="rect"></div>
+        <input type="range">
+    </div>  
+
+    <div class="color-box">
+        <div class="rect"></div>
+        <input type="range">
+    </div>  
+
+
+
+    <script>
+        
+        // const colorBox = document.getElementsByClassName(`color-box`)
+        // const rectBox = document.getElementsByClassName(`rect`)
+        
+        // console.log(colorBox[0]);
+
+        const colorBox = document.getElementsByClassName(`color-box`)
+
+        for(let i = 0 ; i < colorBox.length ; i++){
+            // queryselector로 불러올 때는 .도 써야함
+            const rect = colorBox[i].querySelector(`.rect`)
+            const range = colorBox[i].querySelector(`input`)
+
+            // range의 값이 얼마인가?(100)
+            range.addEventListener(`change`, () =>{
+                //range.value가 100일때 0 , 0일때 100을 하려면 100마이너스해주기
+                rect.style.backgroundColor = `hsl(0 , 0% ,${100 - range.value}%)`
+                // 굳이 hsl로 하는 이유, range와 범위가 100으로 같아서,
+                // RGB는 255까지 이므로 정확하게 처리가 어려움 
+            })
+
+            // 개체의 스타일을 지정하는 방법 : 개체.style.속성이름 = `문자열로 속성지정`
+            // rect.addEventListener(`click`,()=>{
+            //     rect.style.backgroundColor = `red`
+            // })
+            // click했을 때 색이 바뀌는 거
+
+        }
+    </script>
+
+</body>
+</html>
