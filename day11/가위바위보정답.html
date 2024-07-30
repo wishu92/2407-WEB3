@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 600px;
+            height: 500px;
+            border: 1px solid #222;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .board {
+            width: 120px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background-color: #aaa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .board:active {
+            background-color: #555;
+        }
+
+        .board-container {
+            display: flex;
+            gap: 24px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <h1>가위바위보</h1>
+    <div class="container">
+        <h2 class="winning-streak">0연승</h2>
+        <div class="com">
+            <h3>컴퓨터</h3>
+            <div class="board"></div>
+        </div>
+        <div class="user">
+            <h3>유저</h3>
+            <div class="board-container">
+                <div class="board">가위</div>
+                <div class="board">바위</div>
+                <div class="board">보</div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        const winningStreak = document.querySelector(`.winning-streak`)
+        const comBoard = document.querySelector(`.com > .board`)
+        const boardContainer = document.querySelector(`.board-container`)
+      
+
+        const table = [`가위`, `바위`, `보`]
+        let 연승스택 = 0;
+      
+        //chlidElementCount : 자식 박스 갯수
+        for(let i = 0 ; i < boardContainer.childElementCount; i++){
+
+            // 자식 박스 3개 = 0,1,2
+            boardContainer.children[i].addEventListener(`click` , ()=>{
+            const user = i;
+            const computer = parseInt(Math.random()*3)
+            
+            comBoard.innerText = table[computer]
+
+            if(computer === user){
+                winningStreak.innerText = `무승부`
+            }else if (user === 0 && computer === 2 || user === 1 && computer === 0 || user ===2 && computer === 1){
+                연승스택 ++;
+                // winningStreak.style.color = `red`
+                winningStreak.innerText = `승리`
+                
+            }else{
+                연승스택 = 0;
+                winningStreak.innerText = `패배`
+
+            }
+
+            if(연승스택 === 3){
+                winningStreak.innerText = `게임 클리어`
+            }else{
+                winningStreak.innerText = winningStreak.innerText + `${연승스택}연승`
+            }
+        
+            })
+
+        }
+
+    </script>
+</body>
+</html>
