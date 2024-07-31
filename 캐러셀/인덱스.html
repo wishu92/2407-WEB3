@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .slider{
+            width: 300px;
+            height: 200px;
+            /* slider 크기 빼고(보이는 부분 빼고)는 가려지도록 */
+            overflow: hidden;
+        }
+
+        .content-wrapper{
+            display: flex;
+            transition: 0.5s;
+        }
+
+        .content {
+            width: 300px;
+            height: 200px;
+            background-color: pink;
+
+            /* 모박스 content-wrapper가 flex라서 모박스 크기에 따라 자식박스 크기가 달라지지 않도록. shrink */
+            flex-shrink: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 24px;
+        }
+      
+        </style>
+</head>
+<body>
+    <div class="slider">
+        <ul class="content-wrapper">
+            <li class="content">1</li>
+            <li class="content">2</li>
+            <li class="content">3</li>
+            <li class="content">4</li>
+            <li class="content">5</li>
+            <li class="content">6</li>
+            <li class="content">7</li>
+        </ul>
+    </div>
+    <div class="controls">
+        <button class="prev">이전</button>
+        <button class="next">다음</button>
+    </div>
+
+    <script>
+        const nextButton = document.querySelector(`.next`)
+        const prevButton = document.querySelector(`.prev`)
+        const contentWrapper = document.getElementsByClassName(`content-wrapper`)
+        
+
+        let index = 0 ;
+        //페이지수
+    
+        
+        prevButton.addEventListener(`click`, ()=>{
+            index--;        
+            
+            if(index < 0) {
+                index = 0;
+            }
+            
+            // (-)곱하기 (-)는 플러스?
+            contentWrapper[0].style.transform = `translateX(${index * -300}px)`
+            // 대신 applyIndexToSlider() 써도됨.
+        })
+
+        nextButton.addEventListener(`click`, ()=>{
+            index++;
+        
+            // index(페이지수)가 0부터 시작하므로 -1 해주기
+            // index가 contentWrapper의 자식박스갯수(마지막박스)보다 크면 마지막 박스에 위치해라.
+            if(index > contentWrapper.chlidElementCount-1) {
+                index = contentWrapper.childElementCount-1;
+            }
+
+            applyIndexToSlider()
+
+        })
+
+        // prev와 next에 둘다 똑같이 적용되므로 함수로 만들어서 사용해도 됨.
+        function applyIndexToSlider(){
+            contentWrapper[0].style.transform = `translateX(${index * -300}px)`
+        }
+
+        </script>
+</body>
+</html>
