@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="content">
+            안녕하세요
+        </div>
+    </div>
+
+    <div class="other-side">
+        <div>기</div>
+        <div>존</div>
+        <div>요</div>
+        <div>소</div>
+    </div>
+
+    <script>
+        const container = document.querySelector(`.container`);
+        const otherSide = document.querySelector(`.other-side`);
+
+
+        // 컨테이너 복사하기 방법. 위에서 불러온 container를 복사함.
+        // 값 - false면 div 박스만 복사됨. true면 div안에 안녕하세요도 복사됨.
+        // const cloneContainer = container.cloneNode(true);
+
+        // 헷갈리니까 class 명 붙여준것 뿐
+        // cloneContainer.classList.add(`clone`)
+
+        // otherside의 맨뒤에 clonecontainer'안녕하세요'붙여주기
+        // 여러개 붙이고 싶을 때 밑에꺼만 복사하면 계속 덮어쓰기가 되어 1개밖에 안나옴. 
+        // otherSide.appendChild(cloneContainer);
+        // 따라서 반복문해야됨.
+
+        for(let i = 0 ; i < 4 ; i ++) {
+            const cloneContainer = container.cloneNode(true);
+            cloneContainer.classList.add('clone')
+            otherSide.appendChild(cloneContainer);
+        }
+
+        // 맨뒤로 복사 붙여넣기 말고, 맨 앞 혹은 중간으로 붙여넣기.
+        // 일단 복사먼저.
+        const cloneContainerToFront = container.cloneNode(true);
+        // otherside에 ~전에삽입한다./ 클론컨테이너투프론트를 otherside자식0번째 앞에 삽입
+        otherSide.insertBefore(cloneContainerToFront,otherSide.children[0])
+
+        
+    </script>
+</body>
+</html>

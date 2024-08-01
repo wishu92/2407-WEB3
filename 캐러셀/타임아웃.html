@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="ad">광고</button>
+    <p class="text">조용..</p>
+
+    <script>
+        
+        const adButton = document.querySelector(`.ad`);
+        const pText = document.querySelector(`.text`);
+        
+
+        // setTimeout(실행될함수, 타이머) / 23번처럼 미리 만들어져있는경우
+        // adButton.addEventListener(`click`,()=>{
+        //     setTimeout(광고예요,1000)
+        // })
+
+        // function 광고예요(){
+        //     alert(`광고예요`);
+        // }
+
+        // 위에꺼 두개 합쳐서 쓰는 법
+        // setTimeout(()=>{
+        //     alert(`광고일걸요?`);
+        // },2000)
+
+
+        // 문제1
+        // 버튼을 한번 눌렀을 때 ptext가 광고일까요로 바뀌고
+        // 2초뒤 광고입니다로 바뀌기
+        adButton.addEventListener(`click`,()=>{
+            pText.innerText = `광고일까요?`;
+            setTimeout(()=>{
+                pText.innerText = `광고입니다!`;
+            },2000)
+        })
+
+
+    </script>
+</body>
+</html>

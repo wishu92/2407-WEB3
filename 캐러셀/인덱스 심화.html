@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .slider {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .content-wrapper {
+            display: flex;
+            transition: 0.5s;
+        }
+
+        .content {
+            height: 200px;
+            background-color: pink;
+
+            flex-shrink: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slider">
+        <ul class="content-wrapper">
+            <li class="content">1(처음)</li>
+            <li class="content">2</li>
+            <li class="content">3</li>
+            <li class="content">4</li>
+            <li class="content">5</li>
+            <li class="content">6</li>
+            <li class="content">7</li>
+            <li class="content">8(끝)</li>
+        </ul>
+    </div>
+    <div class="controls">
+        <button class="prev">이전</button>
+        <button class="next">다음</button>
+    </div>
+
+    <script>
+        // 한 화면에 컨텐츠를 몇개 보여줄 것인지
+        const viewCount = 1;
+        // 이미지 사이의 갭, 컨텐츠를 1개만 볼거면 필요없음.
+        const gap = 0;
+        // 
+        const slider = document.querySelector('.slider')
+        const contentWrapper = document.querySelector('.content-wrapper');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        // 한 컨텐츠의 넓이 = (보여줄 화면의 넓이 - 갭*(한 화면의 이미지 갯수 - 1) / 한 화면의 이미지 갯수)
+        const contentWidth = (slider.clientWidth - gap * (viewCount - 1)) / viewCount
+
+        // 페이지 0 (0부터 시작이니까)
+        let index = 0 ;
+
+        // slideWidt는 하나의 슬라이드 넓이를 구하는 공식인거고, 직접 갭은 style로 줘야함.
+        contentWrapper.style.gap = `${gap}px`
+
+        // 컨텐츠 랩퍼의 자식박스들이 보여줄 화면에 모두 나타나게 되므로.
+        // 하나하나 돌아가면서 한 컨텐츠의 넓이 값을 갖도록 하는거.
+        for(let i = 0 ; i < contentWrapper.childElementCount ; i ++) {
+            contentWrapper.children[i].style.width = `${contentWidth}px`
+        }
+
+        prevButton.addEventListener('click',()=>{
+            index--;
+            if(index < 0 ) {
+                index = 0 ;
+            }
+            applyIndexToSlider()
+        })
+
+
+        nextButton.addEventListener('click',()=>{
+            index++;
+            // index가 contentWrapper의 자식박스갯수(마지막박스)보다 크면 마지막 박스에 위치해라.
+            // 박스가 2개 이상일때는 2개 이상이 화면에 남아있어야 하므로 viewCount갯수 만큼 빼주기
+            if(index > contentWrapper.childElementCount-viewCount) {
+                index = contentWrapper.childElementCount-viewCount;
+            }
+
+            applyIndexToSlider()
+        })
+
+        function applyIndexToSlider(){
+            // 슬라이드가 한 칸 이동할 때 한개 컨텐츠 + 갭 만큼 이동해야함.
+            contentWrapper.style.transform = `translateX(${index * -(contentWidth + gap)}px)`
+        }
+    </script>
+</body>
+</html>

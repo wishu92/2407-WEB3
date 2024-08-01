@@ -78,17 +78,15 @@
             // 대신 applyIndexToSlider() 써도됨.
         })
 
-        nextButton.addEventListener(`click`, ()=>{
+
+        nextButton.addEventListener('click',()=>{
             index++;
-        
-            // index(페이지수)가 0부터 시작하므로 -1 해주기
+             // index(페이지수)가 0부터 시작하므로 -1 해주기
             // index가 contentWrapper의 자식박스갯수(마지막박스)보다 크면 마지막 박스에 위치해라.
-            if(index > contentWrapper.chlidElementCount-1) {
+            if(index > contentWrapper.childElementCount-1) {
                 index = contentWrapper.childElementCount-1;
             }
-
             applyIndexToSlider()
-
         })
 
         // prev와 next에 둘다 똑같이 적용되므로 함수로 만들어서 사용해도 됨.
