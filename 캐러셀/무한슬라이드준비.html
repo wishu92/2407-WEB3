@@ -85,33 +85,37 @@
 
 
         prevButton.addEventListener('click',()=>{
+
             index--;
+            applyIndexToSlider(true)
 
             if(index < 1 ) {
-                index = contentWrapper.childElementCount-viewCount+2;
+                setTimeout(() => {
+                    applyIndexToSlider(false);
+                }, 500);
+                
+                index = contentWrapper.childElementCount-viewCount-1;
             }
-            applyIndexToSlider()
         })
-
+        
 
         nextButton.addEventListener('click',()=>{
-            index++;
-            
-        
-            // 일단 재생하고 
-            // 만약 마지막 슬라이드(복사본)에 도달했다면
-            if(index = contentWrapper.childElementCount-viewCount) {
-                // 8123456781
-                // transition 지속시간만큼 시간이 흐른 뒤에
-                // transition을 0으로 만들고, 좌표를 첫번째 슬라이드로 바꿔치기한다.
-                // 트랜지션 펄스
-                setTimeout('click',()=> {
-                    index = 0;
-                    applyIndexToSlider(false);
-                }, 5000)
 
+            index++;
+            applyIndexToSlider(true);    
+
+            if(index > contentWrapper.childElementCount-viewCount-1) {
+                
+                setTimeout(() => {
+                    applyIndexToSlider(false);
+                }, 500);
+
+                index = 1;
             }
         })
+           
+ 
+
 
 
         function applyIndexToSlider(animation){
