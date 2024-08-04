@@ -27,16 +27,14 @@
 
 
 
-        //문제1. arr에 배열값 0~100까지 넣어보기
+        //문제1. arr에 배열값 1~100까지 넣어보기
 
         const arr = [];
 
-        for(let i = 0 ; i <= 100 ; i++){
+        for(let i = 1 ; i <= 100 ; i++){
             arr.push(i)
         }
 
-       
-        // console.log는 결과값을 확인하기 위한 도구일 뿐
         console.log(arr);
 
 
@@ -45,7 +43,7 @@
         // 문제2. 위의 식에서 짝수 갯수세기
 
         for(let i = 0 ; i <= 100 ; i++){
-            arr.push(i)
+            // arr.push(i)
             if(arr[i] % 2 === 0){
                 console.log('1')
             }
@@ -63,6 +61,16 @@
             }
         }
         console.log(count);
+
+        // 다른 답.
+        const 짝수 = [];
+
+        for(let i = 0 ; i < arr.length ; i ++) {
+            if(arr[i] % 2 === 0){
+                    짝수.push(arr[i]);
+            }
+        }
+        console.log(짝수.length)
 
 
 
