@@ -55,7 +55,7 @@
 
     <script>
 
-        const viewCount = 3;
+        const viewCount = 1;
         const gap = 0;
         const slider = document.querySelector('.slider')
         const contentWrapper = document.querySelector('.content-wrapper');
@@ -67,11 +67,22 @@
 
         const contentWidth = (slider.clientWidth - gap * (viewCount - 1)) / viewCount
 
-        const cloneFirst = contentWrapper.children[0].cloneNode(true);
-        const cloneLast = contentWrapper.children[7].cloneNode(true);
+        // const cloneFirst = contentWrapper.children[0].cloneNode(true);
+        // const cloneLast = contentWrapper.children[7].cloneNode(true);
 
+        
+        let length = contentWrapper.children.length
 
-        // 현재 뷰카운트가 달라지면 오작동하는 이슈가 있습니다.
+        for(let i = 0 ; i < viewCount; i++){
+            const cloneFirst = contentWrapper.children[i].cloneNode(true);
+            const cloneLast = contentWrapper.children[length-(i+1)].cloneNode(true);
+        }
+        for(let i = 0 ; i < viewCount ; i++){
+            contentWrapper.appendchild(cloneFirst);
+            contentWrapper.insertBefore(cloneLast, contentWrapper.children[i])
+        }
+        
+
         // 이는 뷰카운트 갯수만큼 클론을 만들어야 하는데
         // 기존의 작성은 viewCount가 1인 경우에만 올바르게 작동 되는 상황입니다.
         // 반복문을 이용해 viewCount의 갯수 만큼 clone을 만들어주면 해결 될 것 같은데,
@@ -81,8 +92,8 @@
 
         // // 퍼스트, 라스트 말고 개체.children[index]필요함
         
-        contentWrapper.appendChild(cloneFirst);
-        contentWrapper.insertBefore(cloneLast, contentWrapper.children[0])
+        // contentWrapper.appendChild(cloneFirst);
+        // contentWrapper.insertBefore(cloneLast, contentWrapper.children[0])
 
 
         let playAble = true;
