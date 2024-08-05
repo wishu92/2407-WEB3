@@ -69,7 +69,8 @@
 
         const cloneFirst = contentWrapper.children[0].cloneNode(true);
         const cloneLast = contentWrapper.children[7].cloneNode(true);
-
+        console.log(cloneFirst)
+        console.log(cloneLast)
         
         contentWrapper.appendChild(cloneFirst);
         contentWrapper.insertBefore(cloneLast, contentWrapper.children[0])
