@@ -54,6 +54,7 @@
     </div>
 
     <script>
+
         const viewCount = 1;
         const gap = 0;
         const slider = document.querySelector('.slider')
@@ -61,50 +62,61 @@
         const slideCount = contentWrapper.childElementCount;
         const prevButton = document.querySelector('.prev');
         const nextButton = document.querySelector('.next');
-
+        // 한 컨텐츠의 넓이 = (보여줄 화면의 넓이 - 갭*(한 화면의 이미지 갯수 - 1) / 한 화면의 이미지 갯수)
         const contentWidth = (slider.clientWidth - gap * (viewCount - 1)) / viewCount
 
-        const cloneFirst = contentWrapper.firstElementChild.cloneNode(true);
-        const cloneLast = contentWrapper.lastElementChild.cloneNode(true);
+
+        const cloneFirst = contentWrapper.children[0].cloneNode(true);
+        // const cloneFirst = contentWrapper.firstChild.cloneNode(true);와 같음
+        const cloneLast = contentWrapper.children[7].cloneNode(true);
+        // const cloneLast = contentWrapper.lastChild.cloneNode(true)와 같음.
 
         contentWrapper.appendChild(cloneFirst);
-        contentWrapper.insertBefore(cloneLast, contentWrapper.firstElementChild);
+        contentWrapper.insertBefore(cloneLast, contentWrapper.children[0])
+
 
         let index = 0 ;
-
+ 
         contentWrapper.style.gap = `${gap}px`
 
         for(let i = 0 ; i < contentWrapper.childElementCount ; i ++) {
-            contentWrapper.children[i].style.width = `${contentWidth}px`
+        contentWrapper.children[i].style.width = `${contentWidth}px`
         }
+
 
         prevButton.addEventListener('click',()=>{
 
             index--;
+            applyIndexToSlider(true)
+
             if(index < 1 ) {
+                setTimeout(() => {
+                    applyIndexToSlider(false);
+                }, 500);
+                
                 index = contentWrapper.childElementCount-viewCount-1;
             }
-            applyIndexToSlider()
         })
+        
+
         nextButton.addEventListener('click',()=>{
+
             index++;
-            applyIndexToSlider(true);
+            applyIndexToSlider(true);    
 
-            // 만약 마지막 슬라이드(복사본)에 도달 했다면
-            // transtion 지속시간만큼 시간이 흐른 뒤에
-            // transtion을 0으로 만들고, 좌표를 첫번째 슬라이드로 바꿔치기한다
             if(index > contentWrapper.childElementCount-viewCount-1) {
+                setTimeout(() => {
+                    // index = 1; 화면에 한개가 아니라 여러개 일 수 있어서 viewCount 갯수로
+                    index = viewCount
+                    applyIndexToSlider(false);
+                }, 500);
+                // 500 = transition 속성의 시간과 맞아야함.
 
-                    setTimeout(() => {
-                        applyIndexToSlider(false)
-                        index = 0;
-                    }, 100)
             }
-    
-
-
-           
         })
+           
+
+
 
         function applyIndexToSlider(animation){
             if(animation) {
@@ -115,6 +127,10 @@
             
             contentWrapper.style.transform = `translateX(${index * -(contentWidth + gap)}px)`
         }
+
+        
+
+
     </script>
 </body>
 </html>
