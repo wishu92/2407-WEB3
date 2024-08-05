@@ -55,7 +55,7 @@
 
     <script>
 
-        const viewCount = 1;
+        const viewCount = 3;
         const gap = 0;
         const slider = document.querySelector('.slider')
         const contentWrapper = document.querySelector('.content-wrapper');
@@ -67,20 +67,23 @@
 
         const contentWidth = (slider.clientWidth - gap * (viewCount - 1)) / viewCount
 
-        // const cloneFirst = contentWrapper.children[0].cloneNode(true);
+        //const cloneFirst = contentWrapper.children[0].cloneNode(true);
         // const cloneLast = contentWrapper.children[7].cloneNode(true);
 
         
-        let length = contentWrapper.children.length
+       let length = contentWrapper.children.length
+       
+       
+       for(let i = 0 ; i < viewCount; i++){
+           const cloneFirst = contentWrapper.children[i].cloneNode(true);
+           const cloneLast = contentWrapper.children[length-(i+1)].cloneNode(true);
 
-        for(let i = 0 ; i < viewCount; i++){
-            const cloneFirst = contentWrapper.children[i].cloneNode(true);
-            const cloneLast = contentWrapper.children[length-(i+1)].cloneNode(true);
+           contentWrapper.appendChild(cloneFirst);
+           contentWrapper.insertBefore(cloneLast, contentWrapper.children[0])
+        
         }
-        for(let i = 0 ; i < viewCount ; i++){
-            contentWrapper.appendchild(cloneFirst);
-            contentWrapper.insertBefore(cloneLast, contentWrapper.children[i])
-        }
+        
+      
         
 
         // 이는 뷰카운트 갯수만큼 클론을 만들어야 하는데
@@ -88,12 +91,7 @@
         // 반복문을 이용해 viewCount의 갯수 만큼 clone을 만들어주면 해결 될 것 같은데,
         // 반복문을 한번만 쓰게되면 1 2 3 4 5 -> [1] [5] 1 2 3 4 5 [1] [5] 이런식으로 될것입니다.
         // 복사하는 부분과 끼워넣는 부분을 별도로 분리해서(for문 2개 이상 쓰라는 이야기)
-        // 복사본을 적절한 위치에 잘 넣어보도록 합시다.
 
-        // // 퍼스트, 라스트 말고 개체.children[index]필요함
-        
-        // contentWrapper.appendChild(cloneFirst);
-        // contentWrapper.insertBefore(cloneLast, contentWrapper.children[0])
 
 
         let playAble = true;
