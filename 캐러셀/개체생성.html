@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+
+    </div>
+
+    <script>
+        const container = document.querySelector('.container');
+
+
+        for(let i = 0 ; i < 100 ; i ++) {
+
+            // p 태그 개체 생성함.
+            const newObj = document.createElement('p');
+            // 위에서 생성한 p태그에 radio-button이라는 class명을 줌.
+            newObj.classList.add('radio-button')
+            
+            // <p class = radio-button > /<p> 이거를 container에 붙임
+            container.appendChild(newObj);
+        }
+    </script>
+</body>
+</html>

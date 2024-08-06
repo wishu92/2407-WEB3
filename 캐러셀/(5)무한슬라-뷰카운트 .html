@@ -55,7 +55,7 @@
 
     <script>
 
-        const viewCount = 2;
+        const viewCount = 1;
         const gap = 0;
         const slider = document.querySelector('.slider')
         const contentWrapper = document.querySelector('.content-wrapper');
@@ -66,28 +66,27 @@
         const transitionTime = 300;
 
         const contentWidth = (slider.clientWidth - gap * (viewCount - 1)) / viewCount
-
-        //const cloneFirst = contentWrapper.children[0].cloneNode(true);
-        // const cloneLast = contentWrapper.children[7].cloneNode(true);
-
         
-       let length = contentWrapper.children.length
-    
-       for(let i = 0 ; i < viewCount; i++){
-           const cloneFirst = contentWrapper.children[i*2].cloneNode(true);
-           const cloneLast = contentWrapper.children[length-1].cloneNode(true);
-          
-           for(let j = 0 ; j < 1 ; j++){
-               contentWrapper.appendChild(cloneFirst);
-               contentWrapper.insertBefore(cloneLast, contentWrapper.children[0])
-            }
-           
+
+        const cloneFirst = [];
+        // 복사된 내용 cloneFirst=[1,2,3,....]
+        const cloneLast =[];
+        // cloneLast = [8,7,6,...]
+        
+        // 반복문안에 const 선언하면 for밖에서 못씀
+         for(let i = 0 ; i < viewCount; i++){
+            cloneFirst.push(contentWrapper.children[i].cloneNode(true));
+            cloneLast.push(contentWrapper.children[contentWrapper.childElementCount - 1 - i].cloneNode(true));
+            // 배열안에 집어넣기 -> contentWrapper의 자식요소 길이 = 8 / 얻어야하는 것은(0부터 시작이니까)=7 따라서 -1해주기
+            
+        }
+        for(let i = 0 ; i < viewCount; i++){
+            contentWrapper.appendChild(cloneFirst[i]);
+            contentWrapper.insertBefore(cloneLast[i], contentWrapper.firstElementChild)
+            // 위에서 복사하여 배열해놓은 것을 firstelementchild(맨첫번째 요소)앞에(inserBefore)넣기
         }
             
-    
-        
 
-        // 이는 뷰카운트 갯수만큼 클론을 만들어야 하는데
         // 기존의 작성은 viewCount가 1인 경우에만 올바르게 작동 되는 상황입니다.
         // 반복문을 이용해 viewCount의 갯수 만큼 clone을 만들어주면 해결 될 것 같은데,
         // 반복문을 한번만 쓰게되면 1 2 3 4 5 -> [1] [5] 1 2 3 4 5 [1] [5] 이런식으로 될것입니다.
@@ -100,7 +99,7 @@
         let index = viewCount;
         // index 값으로만 화면이 변화하는게 아니고!! index라는 재료를 통해 slide가 움직여야(translate) 완성되는것.
         // 따라서 let index = viewCount; + apply...(false)도 같이해야함.
-        // false 값인 이유 = 8=>1일때 animation없이 그냥 이동하려고.
+        // false 값인 이유 = 8 => 1일때 animation없이 그냥 이동하려고.
         applyIndexToSlider(false);
 
         contentWrapper.style.gap = `${gap}px`

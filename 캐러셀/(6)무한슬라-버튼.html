@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 보이는 화면과 버튼들을 모두 감싸는 화면 대신,
+        보이는 화면과 사이즈가 일치해야 버튼들의 위치 조작이 쉬워짐. */
+        .slider-container {
+            position: relative;
+            width: fit-content;
+        }
+
+        /* 눈에 보이는 화면, 컨텐츠들의 길이가 더 길기때문에 오버플로우 */
+        .slider {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+        }
+        /* 컨텐츠 요소들 */
+        .content-wrapper {
+            display: flex;
+            transition: 0.5s;
+        }
+        
+        .content {
+            height: 200px;
+            background-color: pink;
+
+            flex-shrink: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        /* 포지션이 absolute이므로 넓이과 높이가 slide-container에 맞춰짐
+         넓이 slide-container = slide = controls*/
+        .controls {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+        }
+
+        .controls > .buttons {
+            display: flex;
+            gap: 8px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            /* 아래로 튀어나오게 */
+            top: calc(100% + 8px);
+            cursor: pointer;
+
+        }
+
+        .radio-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: gray;
+        }
+
+        .radio-button.active {
+            background-color: pink;
+        }
+
+        .prev {
+            position: absolute;
+            left: 4px;
+            bottom: 4px;
+        }
+
+        .next {
+            position: absolute;
+            right: 4px;
+            bottom: 4px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+
+        <div class="slider">
+            <ul class="content-wrapper">
+                <li class="content">1(처음)</li>
+                <li class="content">2</li>
+                <li class="content">3</li>
+                <li class="content">4</li>
+                <li class="content">5</li>
+                <li class="content">6</li>
+                <li class="content">7</li>
+                <li class="content">8(끝)</li>
+            </ul>
+        </div>
+        <div class="controls">
+            <button class="prev">이전</button>
+            <button class="next">다음</button>
+            <div class="buttons">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const viewCount = 3;
+        const gap = 0;
+        const slider = document.querySelector('.slider')
+        const contentWrapper = document.querySelector('.content-wrapper');
+        const slideCount = contentWrapper.childElementCount;
+        const prevButton = document.querySelector('.prev');
+        const radioButtonsContainer = document.querySelector(`.buttons`)
+        const transitionTime = 300;
+        
+        const contentWidth = (slider.clientWidth - gap * (viewCount - 1)) / viewCount
+        
+        const nextButton = document.querySelector('.next');
+
+        // 아래 동그라미 버튼 만드는 방법.
+        for(let i = 0 ; i < slideCount ; i++){
+            // div박스 만들고
+            const button = document.createElement(`div`)
+            // classname주기
+            button.classList.add(`radio-button`)
+
+            button.addEventListener(`click`, ()=>{
+                index = viewCount + i 
+                // index가 0부터 시작하니까 뷰카운트가 2개면, 3번째(1번슬라이드)보이는거
+                applyIndexToSlider()
+            })
+
+            //<div class="buttons">에 삽입하기(appendchild)
+            radioButtonsContainer.appendChild(button);
+
+        }
+       
+        // active는 보통 기본값이 맨처음꺼 이므로 넣어놓음.
+        radioButtonsContainer.children[0].classList.add(`active`)
+        // 이렇게 다음.이전 버튼 눌렀을 때 active만 쌓이면 다 핑크가 되어버림. 따라서 함수 사용하기 맨밑
+
+
+
+        const cloneFirst = [];
+        const cloneLast = [];
+
+        for(let i = 0 ; i < viewCount ; i ++) {
+            cloneFirst.push(contentWrapper.children[i].cloneNode(true))
+            cloneLast.push(contentWrapper.children[contentWrapper.childElementCount - 1 - i].cloneNode(true))
+        }
+
+        for(let i = 0 ; i < viewCount ; i ++) {
+            contentWrapper.appendChild(cloneFirst[i])
+            contentWrapper.insertBefore(cloneLast[i], contentWrapper.firstElementChild)
+        }
+
+
+        let index = viewCount ;
+        let playAble = true;
+
+        applyIndexToSlider(false);
+
+        contentWrapper.style.gap = `${gap}px`
+
+        for(let i = 0 ; i < contentWrapper.childElementCount ; i ++) {
+            contentWrapper.children[i].style.width = `${contentWidth}px`
+        }
+
+
+        
+        prevButton.addEventListener('click',()=>{
+            if(playAble){
+                playAble=false;
+
+                index--;
+                applyIndexToSlider(true)
+
+                setTimeout(() => {
+                    playAble=true;
+
+                    if(index === viewCount - 1) {
+
+                        index = contentWrapper.childElementCount - viewCount - 1
+                        applyIndexToSlider(false) 
+                    }
+                }, transitionTime);
+
+        }})
+        
+
+        nextButton.addEventListener('click',()=>{
+            if(playAble){
+                playAble=false;
+
+                index++;
+                applyIndexToSlider(true)
+
+                setTimeout(() => {
+                    playAble=true;
+
+                    if(index === contentWrapper.childElementCount-viewCount) {
+
+                        index = viewCount
+                        applyIndexToSlider(false) 
+                    }
+                }, transitionTime);
+                
+            }
+           
+        })
+
+        function applyIndexToSlider(animation){
+            if(animation) {
+                contentWrapper.style.transition = `${transitionTime}ms`
+            }else {
+                contentWrapper.style.transition = `none`
+            }
+            
+            contentWrapper.style.transform = `translateX(${index * -(contentWidth + gap)}px)`
+
+
+            // -------------------------
+            resetButtons();
+            if(viewCount-1 === index){
+                radioButtonContainer.lastElementChild.classList.add('active');
+            }else if(slideCount + viewCount === index) {
+                radioButtonContainer.firstElementChild.classList.add('active');
+            }else {
+                radioButtonContainer.children[index-viewCount].classList.add('active');
+            }
+        }
+
+        // -------------공부하기
+        function resetButtons() {
+            for(let i = 0 ; i < radioButtonContainer.childElementCount ; i ++) {
+                radioButtonContainer.children[i].classList.remove('active');
+            }
+        }
+        
+    </script>
+</body>
+</html>
