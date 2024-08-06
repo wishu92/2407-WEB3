@@ -10,8 +10,8 @@
             padding: 0;
         }
 
-        /* 보이는 화면과 버튼들을 모두 감싸는 화면 대신,
-        보이는 화면과 사이즈가 일치해야 버튼들의 위치 조작이 쉬워짐. */
+        /* slider-container = 보이는 화면과 버튼들을 모두 감싸는 화면 
+        대신, 보이는 화면과 사이즈가 일치해야 버튼들의 위치 조작이 쉬워짐. */
         .slider-container {
             position: relative;
             width: fit-content;
@@ -42,7 +42,9 @@
             font-size: 24px;
         }
 
-        /* 포지션이 absolute이므로 넓이과 높이가 slide-container에 맞춰짐
+        /* controls는 버튼들 다 모여있는 박스 */
+        /* 포지션이 absolute이므로 넓이과 높이를 100%으로하면
+         slide-container에 맞춰짐
          넓이 slide-container = slide = controls*/
         .controls {
             position: absolute;
@@ -56,7 +58,10 @@
             gap: 8px;
             position: absolute;
             left: 50%;
+            /* left 50%만 주면 중간이 아니라 중앙선을 기준으로 오른쪽에 위치해버림 
+                따라서 translate를 통해 자기 몸의 50% 만큼 옆으로 이동해야 중앙이 됨.*/
             transform: translateX(-50%);
+
             /* 아래로 튀어나오게 */
             top: calc(100% + 8px);
             cursor: pointer;
@@ -119,7 +124,7 @@
         const contentWrapper = document.querySelector('.content-wrapper');
         const slideCount = contentWrapper.childElementCount;
         const prevButton = document.querySelector('.prev');
-        const radioButtonsContainer = document.querySelector(`.buttons`)
+        const radioButtonContainer = document.querySelector(`.buttons`)
         const transitionTime = 300;
         
         const contentWidth = (slider.clientWidth - gap * (viewCount - 1)) / viewCount
@@ -140,13 +145,14 @@
             })
 
             //<div class="buttons">에 삽입하기(appendchild)
-            radioButtonsContainer.appendChild(button);
+            radioButtonContainer.appendChild(button);
 
         }
        
         // active는 보통 기본값이 맨처음꺼 이므로 넣어놓음.
-        radioButtonsContainer.children[0].classList.add(`active`)
-        // 이렇게 다음.이전 버튼 눌렀을 때 active만 쌓이면 다 핑크가 되어버림. 따라서 함수 사용하기 맨밑
+        radioButtonContainer.children[0].classList.add(`active`)
+        // 이렇게 다음.이전 버튼 눌렀을 때 active만 쌓이면 다 핑크가 되어버림.
+        // resetButtons함수 만들기 맨밑
 
 
 
@@ -228,21 +234,32 @@
             contentWrapper.style.transform = `translateX(${index * -(contentWidth + gap)}px)`
 
 
-            // -------------------------
+            // 애니매이션이 있을 때 맞춰서 remove되는 것이 깔끔하므로 애니메이션 함수에 넣기
+            // 애니매이션이 실행될때마다 일단 remove 해주는 것.
             resetButtons();
+
+            // 뷰카운트가 만약 2라면, [3][4]1234[1][2]에서 [4]번 자리에 왔을 때,
+            // 본 컨텐츠에서 벗어났을 때 (복사본으로 벗어났을 때,) 
+            // 다시 마지막 본컨텐츠 4번에 핑크색칠이 되어라. index는 0부터 시작
             if(viewCount-1 === index){
                 radioButtonContainer.lastElementChild.classList.add('active');
             }else if(slideCount + viewCount === index) {
+                // slidecont(본컨텐츠갯수) 4 + 2 = index 6번은(0부터 시작) 
+                // 7번째에 있는 [1]을 가리킴
                 radioButtonContainer.firstElementChild.classList.add('active');
             }else {
+                ///??????????????
                 radioButtonContainer.children[index-viewCount].classList.add('active');
             }
         }
 
-        // -------------공부하기
+        // 하단의 동그라미 버튼의 핑크색이 계속 쌓이지 않도록 다른거 누를때 계속 리셋시켜줘야함.
+        // 지속적으로 쓸 거라 함수사용이 편함.
         function resetButtons() {
+            // 동그라미 버튼은 컨텐츠 갯수 만큼 필요해서 
             for(let i = 0 ; i < radioButtonContainer.childElementCount ; i ++) {
                 radioButtonContainer.children[i].classList.remove('active');
+                // 동그라미 버튼을 모두 한번씩 거치면서 색을 없애줌.
             }
         }
         
