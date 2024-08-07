@@ -83,7 +83,8 @@
         for(let i = 0 ; i < viewCount; i++){
             contentWrapper.appendChild(cloneFirst[i]);
             contentWrapper.insertBefore(cloneLast[i], contentWrapper.firstElementChild)
-            // 위에서 복사하여 배열해놓은 것을 firstelementchild(맨첫번째 요소)앞에(inserBefore)넣기
+            // 위에서 복사하여 배열해놓은 것을 contentWrapper의 firstelementchild(맨첫번째 요소)부터 빼내서
+            // 앞에(inserBefore)넣기
         }
             
 
