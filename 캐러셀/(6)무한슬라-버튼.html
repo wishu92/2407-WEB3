@@ -145,6 +145,7 @@
             })
 
             //<div class="buttons">에 삽입하기(appendchild)
+            // appendchild는 '자식요소'로 삽입한다.
             radioButtonContainer.appendChild(button);
 
         }
@@ -248,7 +249,8 @@
                 // 7번째에 있는 [1]을 가리킴
                 radioButtonContainer.firstElementChild.classList.add('active');
             }else {
-                ///??????????????
+                // 뷰카운트가 2개 일때. index가 3이면(본컨텐츠 2번), 
+                // radio버튼컨테이너 2번째자식에 색칠. = 누르는대로 색칠됨.
                 radioButtonContainer.children[index-viewCount].classList.add('active');
             }
         }
