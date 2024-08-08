@@ -210,7 +210,7 @@
             controls.appendChild(buttons);
 
             target.appendChild(controls);
-             // slider-container > prev / next / button
+             // slider-container > controls > prev / next / button
 
             const contentWidth = (slider.clientWidth - gap * (viewCount - 1)) / viewCount
 
@@ -342,6 +342,8 @@
             })
 
             function applyIndexToSlider(animation){
+                // animation true = 애니메이션이 있는 상태
+                // 버튼 누를 때마다 계속 넘어가면 안좋음. 몇 초 간격으로 넘어가도록 사이사이에는 false꺼두기
                 if(animation) {
                     contentsWrapper.style.transition = `${transitionTime}ms`
                 }else {

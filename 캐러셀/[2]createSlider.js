@@ -1,4 +1,5 @@
 function createSlider(target, viewCount, gap, transitionTime, autoPlay){
+    // 매개변수 target에 class명을 지정..?
     target.classList.add('sbs-slider-container');
     // const viewCount = 2;
     // const gap = 8;
@@ -51,7 +52,7 @@ function createSlider(target, viewCount, gap, transitionTime, autoPlay){
     nextButton.classList.add('sbs-next');
 
     prevButton.innerText = '이전';
-    nextButton.innerText = '다음'
+    nextButton.innerText = '다음';
     const buttons = document.createElement('div');
     buttons.classList.add('sbs-buttons');
 
@@ -62,14 +63,7 @@ function createSlider(target, viewCount, gap, transitionTime, autoPlay){
     target.appendChild(controls);
 
 
-
-
-
-
     
-
-    const contentWidth = (slider.clientWidth - gap * (viewCount - 1)) / viewCount
-
     // 현재 뷰카운트가 달라지면 오작동하는 이슈가 있습니다.
     // 이는 뷰카운트 갯수만큼 클론을 만들어야 하는데
     // 기존의 작성은 viewCount가 1인 경우에만 올바르게 작동 되는 상황입니다.
@@ -111,17 +105,35 @@ function createSlider(target, viewCount, gap, transitionTime, autoPlay){
     //     contentsWrapper.insertBefore(cloneLast, contentsWrapper.firstElementChild);
     // }
 
+
     let index = viewCount ;
     let playAble = true;
     let autoPlayInterval;
+    let contentWidth;
+    // contentWidth가 계속 변화하는 값이 되어야 하기 때문에 let으로 변수선언하기.
 
-    applyIndexToSlider(false);
     
     contentsWrapper.style.gap = `${gap}px`
+    
+    window.addEventListener('resize',calcSlideWidth)
+    // 브라우저가 resize될 때마다 계산하기. 따라서 함수로 만든거
+    // slider > wrapper > content 순서임. 중간의 wrapper의 크기가 커서 css로 맞추기 어려움.
+    // 따라서 slider와 content의 크기를 유기적으로 변경하기위해 js이용. 
+    
+    // 맨 처음에 우선 계산 한번 하고 시작, 
+    calcSlideWidth();
+    applyIndexToSlider(false);
 
-    for(let i = 0 ; i < contentsWrapper.childElementCount ; i ++) {
-        contentsWrapper.children[i].style.width = `${contentWidth}px`
+
+    function calcSlideWidth(){
+        contentWidth = (slider.clientWidth - gap * (viewCount - 1)) / viewCount;
+    
+        for(let i = 0 ; i < contentsWrapper.childElementCount ; i ++) {
+            contentsWrapper.children[i].style.width = `${contentWidth}px`
+        }
+        applyIndexToSlider(false);
     }
+
 
 
     nextButton.addEventListener('click', next);
@@ -188,7 +200,7 @@ function createSlider(target, viewCount, gap, transitionTime, autoPlay){
 
         }
     }
-
+        
     function applyIndexToSlider(animation){
         if(animation) {
             contentsWrapper.style.transition = `${transitionTime}ms`
@@ -207,10 +219,17 @@ function createSlider(target, viewCount, gap, transitionTime, autoPlay){
             buttons.children[index-viewCount].classList.add('sbs-active');
         }
 
+        // autoPlay를 처음에 ture로 하면 계속 true인 상태임
         if(autoPlay) {
+            //autoplayinterval = 자동재생
+            // clear는 자동재생 없앰. 
+            // 4초에 next를 누르고 5초에 자동으로 넘어가면 5초에 2초에 2번 넘어간 상황이 됨.
+            // 따라서 한칸 넘어가거나 reset될 때 자동재생이 꺼지도록 
+            // applyindex..에 넣어둔것임.
             clearInterval(autoPlayInterval);
             
             autoPlayInterval = setInterval(() => {
+                // 5초마다 자동 재생되고 옆으로 넘어감.
                 next();
             }, 5000);
         }
